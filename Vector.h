@@ -39,7 +39,7 @@ void ShrinkVector(Vector* vector) {
 
 int GetVectorLength(Vector* vector) {
     if (vector == NULL) {
-        printf("Warning: trying to get length but vector is null");
+        printf("Warning: trying to get length but vector is null\n");
         return INT_MIN;
     } else return vector->length;
 }
