@@ -13,48 +13,48 @@ typedef struct {
 
 Vector* CreateVector() {
     Vector* newVector = NULL;
-    while (newVector == NULL) { newVector = malloc(sizeof(Vector)); }
-    newVector->data = malloc(sizeof(int) * vectorMinimumSize);
+    while (newVector == NULL) { newVector = (Vector*)malloc(sizeof(Vector)); }
+    newVector->data = (int*)malloc(sizeof(int) * vectorMinimumSize);
     newVector->length = 0;
     newVector->size = vectorMinimumSize;
     return newVector;
 };
 
-void Grow(Vector* vector) {
+void GrowVector(Vector* vector) {
     vector->size *= 2;
-    int* newData = malloc(sizeof(int) * vector->size);
+    int* newData = (int*)malloc(sizeof(int) * vector->size);
     for (int i = 0; i < vector->length; i++) newData[i] = vector->data[i];
     free(vector->data);
     vector->data = newData;
 }
 
-void Shrink(Vector* vector) {
+void ShrinkVector(Vector* vector) {
     if (vector->size == vectorMinimumSize) return;
     vector->size /= 2;
-    int* newData = malloc(sizeof(int) * vector->size);
+    int* newData = (int*)malloc(sizeof(int) * vector->size);
     for (int i = 0; i < vector->length; i++) newData[i] = vector->data[i];
     free(vector->data);
     vector->data = newData;
 }
 
-int GetLength(Vector* vector) {
+int GetVectorLength(Vector* vector) {
     if (vector == NULL) {
         printf("Warning: trying to get length but vector is null");
         return INT_MIN;
     } else return vector->length;
 }
 
-void Push(Vector* vector, int num) {
+void VectorPush(Vector* vector, int num) {
     if (vector == NULL) {
         printf("Warning: trying to push but vector uninitialized\n");
         return;
     } else {
         vector->data[vector->length++] = num;
-        if (vector->length == vector->size) Grow(vector);
+        if (vector->length == vector->size) GrowVector(vector);
     }
 };
 
-int Pop(Vector* vector) {
+int VectorPop(Vector* vector) {
     if (vector == NULL) {
         printf("Warning: trying to pop but vector uninitialized\n");
         return INT_MIN;
@@ -63,12 +63,12 @@ int Pop(Vector* vector) {
         return INT_MIN;
     } else {
         int num = vector->data[--vector->length];
-        if (vector->length <= vector->size/3) Shrink(vector);
+        if (vector->length <= vector->size/3) ShrinkVector(vector);
         return num;
     }
 }
 
-int Get(Vector* vector, int index) {
+int VectorGet(Vector* vector, int index) {
     if (vector == NULL) {
         printf("Warning: trying to get value but vector uninitialized\n");
         return INT_MIN;
@@ -78,7 +78,7 @@ int Get(Vector* vector, int index) {
     } else return vector->data[index];
 };
 
-bool Set(Vector* vector, int index, int value) {
+bool VectorSet(Vector* vector, int index, int value) {
     if (vector == NULL) {
         printf("Warning: trying to set value but vector uninitialized\n");
         return false;
@@ -91,7 +91,7 @@ bool Set(Vector* vector, int index, int value) {
     }
 }
 
-bool InsertAt(Vector* vector, int value, int index) {
+bool VectorInsertAt(Vector* vector, int value, int index) {
     if (vector == NULL) {
         printf("Warning: trying to insert value but vector uninitialized\n");
         return false;
@@ -102,12 +102,12 @@ bool InsertAt(Vector* vector, int value, int index) {
         for (int i = vector->length; i > index; i--) 
             vector->data[i] = vector->data[i-1];
         vector->data[index] = value;
-        if (++vector->length == vector->size) Grow(vector);
+        if (++vector->length == vector->size) GrowVector(vector);
         return true;
     }
 }
 
-bool RemoveAt(Vector* vector, int index) {
+bool VectorRemoveAt(Vector* vector, int index) {
     if (vector == NULL) {
         printf("Warning: trying to remove value but vector uninitialized\n");
         return false;
@@ -122,13 +122,12 @@ bool RemoveAt(Vector* vector, int index) {
             vector->data[index] = vector->data[index + 1];
             index++;
         }
-        vector->length--;
-        if (vector->length <= vector->size/3) Shrink(vector);
+        if (--vector->length <= vector->size/3) ShrinkVector(vector);
         return true;
     }
 }
 
-int Find(Vector* vector, int value) {
+int FindInVector(Vector* vector, int value) {
     if (vector == NULL) {
         printf("Warning: trying to find value but vector uninitialized\n");
         return -1;
@@ -139,20 +138,20 @@ int Find(Vector* vector, int value) {
     }
 }
 
-bool RemoveFirst(Vector* vector, int value) {
+bool RemoveFromVector(Vector* vector, int value) {
     if (vector == NULL) {
         printf("Warning: trying to remove value but vector uninitialized\n");
         return false;
     } else if (vector->length == 0) {
         printf("Warning: trying to remove value but vector is empty\n");
         return false;
-    } else return RemoveAt(vector, Find(vector, value));
+    } else return VectorRemoveAt(vector, FindInVector(vector, value));
 }
 
-void Print(Vector* vector) {
-    if (vector == NULL) printf("vector: { Uninitialized Vector }\n");
+void PrintVector(Vector* vector) {
+    if (vector == NULL) printf("Vector: { Uninitialized Vector }\n");
     else {
-        printf("vector: { length: %d, size: %d, data: { ", vector->length, vector->size);
+        printf("Vector: { length: %d, size: %d, data: { ", vector->length, vector->size);
         for (int i = 0; i < vector->length; i++) printf("%d, ", vector->data[i]);
         printf("} }\n");
     }
