@@ -20,3 +20,5 @@ Functions:
 12. Grow: grow the vector to double its size (called automatically by the other functions when needed, it is recommended to not use this function unless you know what you are doing)
 13. Shrink: shrink the vector to half its size (called automatically by the other functions when needed, it is recommended to not use this function unless you know what you are doing)
 
+In case of invalid arguments or symantical errors, these methods will print the appropriate errors to the console.
+
