@@ -5,6 +5,7 @@ Automatically allocates and deallocates memory during runtime according to the a
 
 
 Note: It is better to use these provided methods instead of directly accessing the vector's data, because these methods perform appropriate validity and error checking.
+
 Functions:
 1. CreateVector: create a empty vector and return it
 2. Push: append an integer to the end of the vector
