@@ -37,6 +37,13 @@ void Shrink(Vector* vector) {
     vector->data = newData;
 }
 
+int GetLength(Vector* vector) {
+    if (vector == NULL) {
+        printf("Warning: trying to get length but vector is null");
+        return INT_MIN;
+    } else return vector->length;
+}
+
 void Push(Vector* vector, int num) {
     if (vector == NULL) {
         printf("Warning: trying to push but vector uninitialized\n");
