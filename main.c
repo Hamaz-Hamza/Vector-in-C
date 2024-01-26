@@ -3,12 +3,12 @@
 int main() {
     Vector* vec = CreateVector();
     for (int i = 0; i < 20; i++) {
-        Push(vec, i+1);
-        Print(vec);
+        VectorPush(vec, i+1);
+        PrintVector(vec);
     }
     for (int i = 0; i < 20; i++) {
-        Pop(vec);
-        Print(vec);
+        VectorPop(vec);
+        PrintVector(vec);
     }
-    free(vec);
+    DeleteVector(&vec);
 }
